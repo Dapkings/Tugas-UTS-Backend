@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
-    /**
-     * Tampilkan daftar semua produk (Public).
-     */
+   
     public function index()
     {
         // Tampilkan semua produk
@@ -19,25 +17,17 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
-    /**
-     * Tampilkan form untuk membuat produk baru (Public/Admin).
-     */
     public function create()
     {
-        // Menampilkan form create/edit (tanpa data produk)
         return view('products.create');
     }
 
-    /**
-     * Simpan produk baru ke database (Admin Protected).
-     */
     public function store(Request $request)
     {
-        // Validasi data menggunakan Validator::make()
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100', // Wajib, maks 100 karakter
-            'price' => 'required|numeric|gt:0', // Wajib, lebih besar dari 0
-            'stock' => 'required|integer|min:0', // Wajib, angka bulat >= 0
+            'name' => 'required|string|max:100', 
+            'price' => 'required|numeric|gt:0', 
+            'stock' => 'required|integer|min:0',
         ], [
             // Pesan kesalahan kustom (dalam Bahasa Indonesia)
             'name.required' => 'Nama produk wajib diisi.',
@@ -50,14 +40,12 @@ class ProductController extends Controller
             'stock.min' => 'Stok tidak boleh kurang dari 0.',
         ]);
 
-        // Jika validasi gagal, kembalikan ke form dengan pesan error
         if ($validator->fails()) {
             Session::flash('error', 'Validasi gagal. Mohon periksa kembali input Anda.');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         try {
-            // Simpan data ke tabel products menggunakan Eloquent ORM
             Product::create($request->all());
 
             Session::flash('success', 'Produk berhasil ditambahkan!');
@@ -68,21 +56,14 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Tampilkan form untuk mengedit produk yang ada (Admin Protected).
-     */
     public function edit(Product $product)
     {
         // Tampilkan form create/edit dengan data produk
         return view('products.create', compact('product'));
     }
 
-    /**
-     * Perbarui data produk di database (Admin Protected).
-     */
     public function update(Request $request, Product $product)
     {
-        // Validasi data menggunakan Validator::make()
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
             'price' => 'required|numeric|gt:0',
@@ -98,14 +79,12 @@ class ProductController extends Controller
             'stock.min' => 'Stok tidak boleh kurang dari 0.',
         ]);
 
-        // Jika validasi gagal
         if ($validator->fails()) {
             Session::flash('error', 'Validasi gagal saat update. Mohon periksa kembali input Anda.');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         try {
-            // Update data menggunakan Eloquent ORM
             $product->update($request->all());
 
             Session::flash('success', 'Produk berhasil diperbarui!');
@@ -116,13 +95,9 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Hapus produk dari database (Admin Protected).
-     */
     public function destroy(Product $product)
     {
         try {
-            // Hapus data menggunakan Eloquent ORM
             $product->delete();
 
             Session::flash('success', 'Produk berhasil dihapus!');

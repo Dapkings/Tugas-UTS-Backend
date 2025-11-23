@@ -5,7 +5,7 @@
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800">Daftar Produk</h2>
         @auth
-            <!-- Tombol hanya muncul jika user terautentikasi -->
+            
             <a href="{{ route('admin.products.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 shadow-md">
                 + Tambah Produk Baru
             </a>

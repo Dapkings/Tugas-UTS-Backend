@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto">
-    <!-- Blok kondisional untuk mode Edit atau Create -->
     @if (isset($product))
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Edit Produk: {{ $product->name }}</h2>
         <form action="{{ route('admin.products.update', $product) }}" method="POST">
@@ -13,8 +12,7 @@
     @endif
 
         @csrf
-
-        <!-- Input Nama (Text) -->
+        
         <div class="mb-4">
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Produk</label>
             <input type="text" name="name" id="name"
@@ -25,7 +23,6 @@
             @enderror
         </div>
 
-        <!-- Input Harga (Number) -->
         <div class="mb-4">
             <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Harga (Rp)</label>
             <input type="number" name="price" id="price"
@@ -36,7 +33,6 @@
             @enderror
         </div>
 
-        <!-- Input Stok (Number) -->
         <div class="mb-6">
             <label for="stock" class="block text-sm font-medium text-gray-700 mb-1">Stok</label>
             <input type="number" name="stock" id="stock"
@@ -47,7 +43,6 @@
             @enderror
         </div>
 
-        <!-- Tombol Aksi -->
         <div class="flex items-center justify-between">
             <a href="{{ route('admin.products.index') }}" class="text-gray-600 hover:text-gray-900 font-medium py-2 px-4 rounded-lg transition duration-150">
                 Kembali
